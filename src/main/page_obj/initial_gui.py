@@ -5,6 +5,7 @@ class InitialGui(object):
 
     def insert_place_and_search(self, place):
         self.text_box.click()
+        self.text_box = self.driver.find_element_by_id('com.google.android.apps.maps:id/search_omnibox_edit_text')
         self.text_box.send_keys(place)
 
     def validate_search_result(self, place, address):

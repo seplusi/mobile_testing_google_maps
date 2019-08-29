@@ -13,8 +13,7 @@ class GoogleMapsTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = appium_driver.AppiumDriver(appPackage='', browserName='Chrome', automationName='UiAutomator2',
-                                                platformVersion='6').driver
+        cls.driver = appium_driver.AppiumDriver(appPackage='', browserName='Chrome', platformVersion='6').driver
 
     def setUp(self):
         self.driver.get('https://www.eurosport.co.uk/')

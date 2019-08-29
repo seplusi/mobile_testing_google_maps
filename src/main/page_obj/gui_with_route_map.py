@@ -1,3 +1,6 @@
+from selenium.common.exceptions import NoSuchElementException
+
+
 class SelectedPlaceRouteGui(object):
     def __init__(self, driver, place):
         self.driver = driver
@@ -18,12 +21,27 @@ class SelectedPlaceRouteGui(object):
         horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Public transport mode:\')]')
         horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Walking mode:\')]')
         horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Ride services:\')]')
-        self.cycling_button = horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Cycling mode:\')]')
 
-        self.driver.swipe(100, 186, 0, 186, 500)
-        horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Driving mode\')]')
-        self.driver.swipe(0, 186, 100, 186, 500)
-        self.cycling_button = horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Cycling mode:\')]')
+        for _ in range(2):
+            try:
+                self.driver.implicitly_wait(1)
+                self.driver.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Driving mode\')]')
+                break
+            except NoSuchElementException:
+                self.driver.swipe(100, 200, 222, 200, 500)
+        else:
+            assert False
+
+        for _ in range(2):
+            try:
+                self.cycling_button = self.driver.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Cycling mode:\')]')
+                break
+            except NoSuchElementException:
+                self.driver.swipe(222, 200, 100, 200, 500)
+        else:
+            assert False
+
+        self.driver.implicitly_wait(20)
 
     def validate_map_items(self):
         self.driver.find_element_by_id('com.google.android.apps.maps:id/above_compass_button').find_element_by_xpath('//android.widget.FrameLayout[contains(@content-desc, \'Layers button\')]')

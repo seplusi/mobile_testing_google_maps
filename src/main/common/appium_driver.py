@@ -10,9 +10,10 @@ class AppiumDriver(object):
         desired_caps['noReset'] = kwargs.get('noReset', 'true')
         desired_caps['appPackage'] = kwargs.get('appPackage', 'com.google.android.apps.maps')
         desired_caps['appActivity'] = kwargs.get('appActivity', 'com.google.android.maps.MapsActivity')
-        if kwargs.get('browserName') and kwargs.get('automationName'):
+        if kwargs.get('browserName'):
             desired_caps['browserName'] = kwargs.get('browserName', 'Chrome')
-            desired_caps['automationName'] = kwargs.get('automationName', 'UiAutomator2')
+
+        desired_caps['automationName'] = kwargs.get('automationName', 'UiAutomator2')
 
         self.driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
         self.driver.implicitly_wait(implicit_wait)
