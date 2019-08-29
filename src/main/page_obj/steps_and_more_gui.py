@@ -15,7 +15,7 @@ class StepsAndMoreGui(object):
 
     def scroll_2_page_end(self, address):
         self.directions_lst = [element.text for element in self.driver.find_elements_by_xpath('//android.support.v7.widget.RecyclerView/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.TextView')]
-        self.driver.implicitly_wait(1)
+        self.driver.implicitly_wait(2)
         for _ in range(100):
             try:
                 current_directions = [element.text for element in self.driver.find_elements_by_xpath('//android.support.v7.widget.RecyclerView/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.TextView')]

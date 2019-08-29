@@ -22,6 +22,8 @@ class SelectedPlaceRouteGui(object):
 
         self.driver.swipe(100, 186, 0, 186, 500)
         horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Driving mode\')]')
+        self.driver.swipe(0, 186, 100, 186, 500)
+        self.cycling_button = horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Cycling mode:\')]')
 
     def validate_map_items(self):
         self.driver.find_element_by_id('com.google.android.apps.maps:id/above_compass_button').find_element_by_xpath('//android.widget.FrameLayout[contains(@content-desc, \'Layers button\')]')
