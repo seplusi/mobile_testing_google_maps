@@ -4,10 +4,9 @@ from appium.webdriver.common.touch_action import TouchAction
 class StepsAndMoreGui(object):
     def __init__(self, driver):
         self.driver = driver
-        self.driver.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'cycling\')]')
+        self.driver.find_element_by_xpath('//androidx.viewpager.widget.ViewPager[contains(@content-desc, \'walking directions\')]')
         self.steps_box = self.driver.find_element_by_id('com.google.android.apps.maps:id/details_cardlist')
         self.move_start_point = self.steps_box.find_element_by_xpath('//android.widget.TextView[@text=\'Your location\']')
-        self.steps_box.find_element_by_xpath('//android.widget.TextView[@text=\'Steps\']')
         self.driver.find_element_by_id('com.google.android.apps.maps:id/start_button')
         self.driver.find_element_by_id('com.google.android.apps.maps:id/persistent_footer_secondary_button')
         self.destination_nav_button = None

@@ -9,11 +9,10 @@ class InitialGui(object):
         self.text_box.send_keys(place)
 
     def validate_search_result(self, place, address):
-        self.selection = self.driver.find_element_by_xpath("//android.widget.TextView[@text='%s']/../.." % place)
+        self.selection = self.driver.find_element_by_xpath("//android.widget.TextView[@text='%s']/../../../.." % place)
         self.selection.find_element_by_xpath("//android.widget.TextView[@text='%s']" % place)
         self.selection.find_element_by_xpath("//android.widget.TextView[contains(@text, '%s')]" % address)
-        self.selection.find_element_by_xpath("//android.widget.TextView[contains(@text, 'mi')]")
 
     def click_validated_option(self):
-        self.selection.find_element_by_class_name('android.widget.ImageView')
+#        self.selection.find_element_by_class_name('android.widget.ImageView')
         self.selection.click()

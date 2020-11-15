@@ -5,8 +5,8 @@ class AppiumDriver(object):
     def __init__(self, implicit_wait=20, **kwargs):
         desired_caps = {}
         desired_caps['platformName'] = kwargs.get('plafformName', 'Android')
-        desired_caps['platformVersion'] = kwargs.get('platformVersion', '6')
-        desired_caps['deviceName'] = kwargs.get('deviceName', 'Moto E')
+        desired_caps['platformVersion'] = kwargs.get('platformVersion', '9')
+        desired_caps['deviceName'] = kwargs.get('deviceName', 'Arcanjo')
         desired_caps['noReset'] = kwargs.get('noReset', 'true')
         desired_caps['appPackage'] = kwargs.get('appPackage', 'com.google.android.apps.maps')
         desired_caps['appActivity'] = kwargs.get('appActivity', 'com.google.android.maps.MapsActivity')

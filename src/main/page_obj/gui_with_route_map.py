@@ -4,6 +4,7 @@ from selenium.common.exceptions import NoSuchElementException
 class SelectedPlaceRouteGui(object):
     def __init__(self, driver, place):
         self.driver = driver
+        self.driver.find_element_by_id('com.google.android.apps.maps:id/sheet_header')
         self.header_element = self.driver.find_element_by_id('com.google.android.apps.maps:id/header_container')
         self.validate_header(place)
         self.validate_map_items()
@@ -12,15 +13,14 @@ class SelectedPlaceRouteGui(object):
 
     def validate_header(self, place):
         self.header_element.find_element_by_xpath('//android.widget.FrameLayout[contains(@content-desc,\'Navigate up\')]')
-        self.header_element.find_element_by_xpath('//android.widget.TextView[@text=\'Your location\']')
         self.header_element.find_element_by_xpath('//android.widget.TextView[@text=\'%s\']' % place)
-        self.header_element.find_element_by_xpath('//android.widget.ImageView[contains(@content-desc, \'Overflow menu\')]')
         self.header_element.find_element_by_xpath('//android.widget.ImageView[contains(@content-desc, \'Swap start and destination\')]')
 
         horizontal_buttons = self.header_element.find_element_by_class_name('android.widget.HorizontalScrollView')
-        horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Public transport mode:\')]')
-        horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Walking mode:\')]')
-        horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Ride services:\')]')
+        horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Driving mode\')]')
+        horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Transit mode\')]')
+        horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Walking mode\')]')
+        horizontal_buttons.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Bicycling mode\')]')
 
         for _ in range(2):
             try:
@@ -34,7 +34,17 @@ class SelectedPlaceRouteGui(object):
 
         for _ in range(2):
             try:
-                self.cycling_button = self.driver.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Cycling mode:\')]')
+                self.cycling_button = self.driver.find_element_by_xpath('//android.widget.LinearLayout[contains(@content-desc, \'Bicycling mode\')]')
+                break
+            except NoSuchElementException:
+                self.driver.swipe(222, 200, 100, 200, 500)
+        else:
+            assert False
+
+        for _ in range(2):
+            try:
+                self.walking_button = self.driver.find_element_by_xpath(
+                    '//android.widget.LinearLayout[contains(@content-desc, \'Walking mode\')]')
                 break
             except NoSuchElementException:
                 self.driver.swipe(222, 200, 100, 200, 500)
@@ -44,7 +54,7 @@ class SelectedPlaceRouteGui(object):
         self.driver.implicitly_wait(20)
 
     def validate_map_items(self):
-        self.driver.find_element_by_id('com.google.android.apps.maps:id/above_compass_button').find_element_by_xpath('//android.widget.FrameLayout[contains(@content-desc, \'Layers button\')]')
+        self.driver.find_element_by_id('com.google.android.apps.maps:id/fab_icon')
         self.driver.find_element_by_id('com.google.android.apps.maps:id/mylocation_button')
 
     def click_steps_and_more(self):
@@ -52,3 +62,6 @@ class SelectedPlaceRouteGui(object):
 
     def click_cycling_option(self):
         self.cycling_button.click()
+
+    def click_walking_option(self):
+        self.walking_button.click()

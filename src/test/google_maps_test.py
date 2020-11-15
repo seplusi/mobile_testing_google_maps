@@ -14,7 +14,7 @@ from src.main.page_obj import route_preview_gui
 
 class GoogleMapsTests(unittest.TestCase):
     def setUp(self):
-        self.driver = appium_driver.AppiumDriver(platformVersion='6').driver
+        self.driver = appium_driver.AppiumDriver(platformVersion='9').driver
         self.initial_gui = initial_gui.InitialGui(self.driver)
 
     def tearDown(self):
@@ -23,17 +23,18 @@ class GoogleMapsTests(unittest.TestCase):
 #    @unittest.skip('')
     def test_place_steps_and_more_flow(self):
         self.initial_gui.insert_place_and_search('Swan Leisure')
-        self.initial_gui.validate_search_result('Swan Leisure', 'Rathmines Square, Rathmines Road Lower, Dublin 6')
+        self.initial_gui.validate_search_result('Swan Leisure', 'Rathmines Road Lower, Rathmines, Dublin 6, Ireland')
         self.initial_gui.click_validated_option()
 
         self.selected_place_gui = gui_with_selected_place.SelectedPlaceGui(self.driver, 'Swan Leisure, Rath',
-                                                                           ['Directions', 'Start', 'Call', 'Share'],
-                                                                           ['Open · Closes', 'Sports complex', 'min'],
+                                                                           ['Directions', 'Call', 'Save', 'Share'],
+                                                                           ['Swan Leisure', '4.4', '620', 'Sports complex'],
                                                                            'Swan Leisure')
         self.selected_place_gui.click_direction_button()
+        self.selected_place_gui.select_starting_point()
 
         self.selected_place_route_gui = gui_with_route_map.SelectedPlaceRouteGui(self.driver, 'Swan Leisure')
-        self.selected_place_route_gui.click_cycling_option()
+        self.selected_place_route_gui.click_walking_option()
         self.selected_place_route_gui.click_steps_and_more()
 
         self.steps_and_more_gui = steps_and_more_gui.StepsAndMoreGui(self.driver)
